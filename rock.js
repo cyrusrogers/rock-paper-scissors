@@ -1,4 +1,5 @@
 console.log("Hello World!")
+let humanChoice,computerChoice;
 function getComputerChoice() {
   let computerMove = Math.round(Math.random()*100)/100
   if (computerMove < 0.34) {
@@ -10,13 +11,8 @@ function getComputerChoice() {
   }
  
 }
-let computerChoice = getComputerChoice();
-//console.log(computerChoice)
-/*counter = 0
-while (counter < 10) {
-   console.log(getComputerChoice());
-   counter++;
-}*/
+computerChoice = getComputerChoice();
+
 
 function getHumanChoice() {
   let options = ["rock","paper","scissors"]
@@ -27,17 +23,47 @@ function getHumanChoice() {
     console.log("Invalid move!")
   }
 }
-
-let humanChoice = getHumanChoice ();
-//console.log(humanChoice)
+ humanChoice = getHumanChoice ();
 
 
-let humanScore = 0;
-let computerScore = 0;
+function playGame() {
+  let humanScore = 0;
+  let computerScore = 0;
+  let tie = 0;
+  function playRound(humanChoice,computerChoice) {
+    if (humanChoice === computerChoice) {
+      console.log(`it's a tie! ${humanChoice} ties with ${computerChoice}`)
+      tie++;
+    } else if (
+      (humanChoice === "rock" && computerChoice === "scissors") || 
+      (humanChoice === "paper" && computerChoice === "rock" ) || 
+      (humanChoice === "scissors" && computerChoice === "paper")
+    ) {
+      console.log(`You win! ${humanChoice} beats ${computerChoice}`)
+      humanScore++;
+      
+    } else {
+      console.log(`You lose! ${computerChoice} beats ${humanChoice}`)
+      computerScore++;
+    }
+      
+  }
+  for (let i = 1; i <= 5; i++) {
+    let choices = ["rock","paper","scissors"]
+    let humanChoice = prompt("Pick your move 'rock','paper'/'scissors': ").toLowerCase();
+    let computerChoice=choices[Math.floor(Math.random()*choices.length)]
+    console.log(`Round ${i}:`);
+    playRound(humanChoice, computerChoice);
+    console.log(`Score - Human: ${humanScore}, Computer: ${computerScore}, Ties: ${tie}\n`);
+  }
 
-function playRound(humanChoice,computerChoice) {
-  console.log(`humanMove: ${humanChoice}`);
-  console.log(`computerMove: ${computerChoice}`);
-  
+  console.log("Game Over!");
+  if (humanScore > computerScore) {
+    console.log("🎉 You win the game!");
+  } else if (humanScore < computerScore) {
+    console.log("💻 Computer wins the game!");
+  } else {
+    console.log("🤝 It's a tie overall!");
+  }
 }
-console.log(playRound(humanChoice,computerChoice));
+  playGame();
